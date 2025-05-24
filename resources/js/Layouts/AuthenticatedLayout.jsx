@@ -128,10 +128,10 @@ export default function AuthenticatedLayout({ children }) {
                                 />
                             </RouteSide>
                         </ul>
-                        <h1 className="text-center font-medium uppercase sm:mt-12 mb-4 invisible sm:visible">
+                        <h1 className="text-center font-medium uppercase sm:mt-12 mb-4 hidden sm:block">
                             Account Menu
-                        </h1>{" "}
-                        <ul className="space-y-2 font-medium">
+                        </h1>
+                        <ul className="space-y-2 font-medium mt-12 sm:mt-0">
                             <RouteSide
                                 nama={"Edit Akun"}
                                 href={route("profile.edit")}
@@ -152,9 +152,7 @@ export default function AuthenticatedLayout({ children }) {
                                         "w-5 h-5 text-gray-900 transition duration-75 group-hover:text-gray-700 "
                                     }
                                 />
-                                <h1 className="ms-3 hidden sm:block">
-                                    Logout
-                                </h1>
+                                <h1 className="ms-3 hidden sm:block">Logout</h1>
                             </div>
                         </ul>
                     </div>

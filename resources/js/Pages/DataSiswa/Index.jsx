@@ -117,7 +117,7 @@ const Index = () => {
     };
     return (
         <AuthenticatedLayout>
-            <Head title="Data Siswa"/>
+            <Head title="Data Siswa" />
             <TitlePage
                 title={"Data Siswa"}
                 onClick={() => {
@@ -170,7 +170,7 @@ const Index = () => {
                         />
                     </button>
                     <div
-                        className="cursor-pointer absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block
+                        className="cursor-pointer absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden sm:group-hover:block
                             bg-gray-900 text-white text-sm px-3 py-1 rounded shadow text-center"
                     >
                         Sorting Data
@@ -187,7 +187,7 @@ const Index = () => {
                         name="search"
                         value={dataSearch.search}
                         onChange={(e) => handleSearchChange(e)}
-                        className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500   "
+                        className="block pt-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-64 sm:80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500"
                         placeholder="Cari Data Siswa"
                     />
                 </div>
@@ -483,8 +483,8 @@ const Index = () => {
                                                                 <button
                                                                     type="button"
                                                                     onClick={() =>
-                                                                        setSortModal(
-                                                                            !sortModal
+                                                                        setDataShow(
+                                                                            null
                                                                         )
                                                                     }
                                                                     className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"

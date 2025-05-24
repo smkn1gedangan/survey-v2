@@ -55,7 +55,7 @@ const Responden = () => {
     };
     return (
         <div className="w-full min-h-screen bg-gray-50">
-            <Head title="Responden"/>
+            <Head title="Responden" />
             <Navbar></Navbar>
             <header className="mt-4 space-y-2 p-2 sm:p-3 md:p-4">
                 <p className="mb-2 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl text-center">
@@ -109,13 +109,6 @@ const Responden = () => {
                                 }
                             />
                         </button>
-                        <div
-                            className="cursor-pointer absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden group-hover:block
-                            bg-gray-900 text-white text-sm px-3 py-1 rounded shadow text-center"
-                        >
-                            Sorting Data
-                            <div className="absolute top-full left-1/2 -translate-x-1/2 w-2 h-2 rotate-45 bg-gray-900"></div>
-                        </div>
                     </div>
                     <div className="relative mt-1">
                         <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -289,8 +282,8 @@ const Responden = () => {
                                                                 <button
                                                                     type="button"
                                                                     onClick={() =>
-                                                                        setSortModal(
-                                                                            !sortModal
+                                                                        setDataShow(
+                                                                            null
                                                                         )
                                                                     }
                                                                     className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
@@ -507,7 +500,7 @@ const Responden = () => {
                                                                             dataShow.data_id
                                                                         )}
                                                                     >
-                                                                        <span className="hidden md:block">
+                                                                        <span className="block">
                                                                             Export
                                                                             to
                                                                             Pdf
