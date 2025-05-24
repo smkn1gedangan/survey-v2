@@ -10,7 +10,7 @@ import KeyIcon from "@/Icon/KeyIcon";
 import PlusIcon from "@/Icon/PlusIcon";
 import Footer from "@/Layouts/Footer";
 import Navbar from "@/Layouts/Navbar";
-import { router, useForm, usePage } from "@inertiajs/react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 
 const Responden = () => {
@@ -55,6 +55,7 @@ const Responden = () => {
     };
     return (
         <div className="w-full min-h-screen bg-gray-50">
+            <Head title="Responden"/>
             <Navbar></Navbar>
             <header className="mt-4 space-y-2 p-2 sm:p-3 md:p-4">
                 <p className="mb-2 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl text-center">

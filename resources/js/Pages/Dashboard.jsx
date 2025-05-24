@@ -1,6 +1,6 @@
 import { LineChart, DoughnutChart } from "@/Helper/Chart";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { router, useForm, usePage } from "@inertiajs/react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
 import React, { useEffect } from "react";
 
 const Dashboard = () => {
@@ -33,6 +33,7 @@ const Dashboard = () => {
     };
     return (
         <AuthenticatedLayout>
+            <Head title="Dashboard"/>
             <div className="flex gap-1 justify-center flex-wrap">
                 <h1 className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900">
                     Grafik Statistik Survey Peminatan SMKN 1 GEDANGAN

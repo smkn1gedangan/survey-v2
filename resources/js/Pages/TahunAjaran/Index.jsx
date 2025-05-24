@@ -11,7 +11,7 @@ import EditIcon from "@/Icon/EditIcon";
 import ExitIcon from "@/Icon/ExitIcon";
 import PlusIcon from "@/Icon/PlusIcon";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { router, useForm, usePage } from "@inertiajs/react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -58,9 +58,7 @@ const Index = () => {
                 setCreateModal(false);
                 reset();
             },
-            onError: (e) => {
-                console.log(e);
-            },
+          
         });
     };
 
@@ -85,14 +83,13 @@ const Index = () => {
                 seteditModal(null);
                 reset();
             },
-            onError: (e) => {
-                console.log(e);
-            },
+          
         });
     };
 
     return (
         <AuthenticatedLayout>
+            <Head title="Tahun Ajaran"/>
             <TitlePage
                 title={"Tahun Ajaran"}
                 onClick={() => setCreateModal(true)}

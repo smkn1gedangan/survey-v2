@@ -15,7 +15,7 @@ import PlusIcon from "@/Icon/PlusIcon";
 import ReturnedIcon from "@/Icon/ReturnedIcon";
 import SpyIcon from "@/Icon/SpyIcon";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { router, useForm, usePage } from "@inertiajs/react";
+import { Head, router, useForm, usePage } from "@inertiajs/react";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
@@ -106,9 +106,6 @@ const Index = () => {
                 seteditModal(null);
                 reset();
             },
-            onError: (e) => {
-                console.log(e);
-            },
         });
     };
     const handleShow = (e, id) => {
@@ -117,10 +114,10 @@ const Index = () => {
         if (filtered) {
             setDataShow(filtered);
         }
-        console.log(dataShow);
     };
     return (
         <AuthenticatedLayout>
+            <Head title="Data Siswa"/>
             <TitlePage
                 title={"Data Siswa"}
                 onClick={() => {

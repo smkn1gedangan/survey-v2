@@ -7,7 +7,7 @@ import { AlertSuccess } from "@/Helper/Alert";
 import Footer from "@/Layouts/Footer";
 import Navbar from "@/Layouts/Navbar";
 import { useGetProvince, useGetRegencies } from "@/Services/Api_call";
-import { useForm, usePage } from "@inertiajs/react";
+import { Head, useForm, usePage } from "@inertiajs/react";
 import React, { useEffect, useRef, useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 
@@ -52,6 +52,7 @@ const Welcome = () => {
 
     return (
         <div className="w-full min-h-screen bg-gray-50">
+            <Head title="Isi Survey"/>
             <Navbar></Navbar>
             {ta ? (
                 <>
