@@ -58,7 +58,6 @@ const Index = () => {
                 setCreateModal(false);
                 reset();
             },
-          
         });
     };
 
@@ -83,13 +82,12 @@ const Index = () => {
                 seteditModal(null);
                 reset();
             },
-          
         });
     };
 
     return (
         <AuthenticatedLayout>
-            <Head title="Tahun Ajaran"/>
+            <Head title="Tahun Ajaran" />
             <TitlePage
                 title={"Tahun Ajaran"}
                 onClick={() => setCreateModal(true)}
@@ -166,128 +164,126 @@ const Index = () => {
                                             >
                                                 <EditIcon />
                                             </div>
-                                            {editModal?.ta_id === ta.ta_id && (
-                                                <Modal
-                                                    show={editModal.active}
-                                                    onClose={() =>
-                                                        seteditModal(null)
-                                                    }
-                                                >
-                                                    <div className="relative bg-white rounded-lg shadow-sm ">
-                                                        <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                                                            <h3 className="text-lg font-semibold text-gray-900 ">
-                                                                Ubah Tahun
-                                                                Ajaran
-                                                            </h3>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() =>
-                                                                    seteditModal(
-                                                                        null
-                                                                    )
-                                                                }
-                                                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                                            >
-                                                                <ExitIcon />
-                                                                <span className="sr-only">
-                                                                    Close modal
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                        <form
-                                                            onSubmit={
-                                                                handleUpdate
+                                            <Modal
+                                                show={
+                                                    editModal?.ta_id ===
+                                                    ta.ta_id
+                                                }
+                                                onClose={() =>
+                                                    seteditModal(null)
+                                                }
+                                            >
+                                                <div className="relative bg-white rounded-lg shadow-sm ">
+                                                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                                                        <h3 className="text-lg font-semibold text-gray-900 ">
+                                                            Ubah Tahun Ajaran
+                                                        </h3>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                seteditModal(
+                                                                    null
+                                                                )
                                                             }
-                                                            className="p-4 md:p-5"
+                                                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                                                         >
-                                                            <div className="grid gap-4 mb-4 grid-cols-2">
-                                                                <div className="col-span-2">
-                                                                    <InputLabel
-                                                                        value={
-                                                                            "Tahun Ajaran   Contoh ( 2016 - 2017 )"
-                                                                        }
-                                                                    />
-                                                                    <TextInput
-                                                                        id="tahun"
-                                                                        type="text"
-                                                                        name="tahun"
-                                                                        value={
-                                                                            dataEdit.tahun
-                                                                        }
-                                                                        className="mt-1 block w-full"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setDataEdit(
-                                                                                "tahun",
-                                                                                e
-                                                                                    .target
-                                                                                    .value
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                    <InputError
-                                                                        message={
-                                                                            errorsEdit.tahun
-                                                                        }
-                                                                        className="mt-2"
-                                                                    />
-                                                                </div>
-                                                                <div className="col-span-2">
-                                                                    <InputLabel
-                                                                        value={
-                                                                            "Keaktifan"
-                                                                        }
-                                                                    />
-                                                                    <select
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setDataEdit(
-                                                                                "aktif",
-                                                                                e
-                                                                                    .target
-                                                                                    .value
-                                                                            )
-                                                                        }
-                                                                        value={
-                                                                            dataEdit.aktif
-                                                                        }
-                                                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
-                                                                    >
-                                                                        <option
-                                                                            value={
-                                                                                "yes"
-                                                                            }
-                                                                        >
-                                                                            Ya
-                                                                        </option>
-                                                                        <option
-                                                                            value={
-                                                                                "no"
-                                                                            }
-                                                                        >
-                                                                            Tidak
-                                                                        </option>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                            <button
-                                                                type="submit"
-                                                                className="text-white inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                                                disabled={
-                                                                    processingEdit
-                                                                }
-                                                            >
-                                                                <EditIcon />
-                                                                {processingEdit
-                                                                    ? "Proses..."
-                                                                    : "Ubah Tahun Ajaran"}
-                                                            </button>
-                                                        </form>
+                                                            <ExitIcon />
+                                                            <span className="sr-only">
+                                                                Close modal
+                                                            </span>
+                                                        </button>
                                                     </div>
-                                                </Modal>
-                                            )}
+                                                    <form
+                                                        onSubmit={handleUpdate}
+                                                        className="p-4 md:p-5"
+                                                    >
+                                                        <div className="grid gap-4 mb-4 grid-cols-2">
+                                                            <div className="col-span-2">
+                                                                <InputLabel
+                                                                    value={
+                                                                        "Tahun Ajaran   Contoh ( 2016 - 2017 )"
+                                                                    }
+                                                                />
+                                                                <TextInput
+                                                                    id="tahun"
+                                                                    type="text"
+                                                                    name="tahun"
+                                                                    value={
+                                                                        dataEdit.tahun
+                                                                    }
+                                                                    className="mt-1 block w-full"
+                                                                    onChange={(
+                                                                        e
+                                                                    ) =>
+                                                                        setDataEdit(
+                                                                            "tahun",
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <InputError
+                                                                    message={
+                                                                        errorsEdit.tahun
+                                                                    }
+                                                                    className="mt-2"
+                                                                />
+                                                            </div>
+                                                            <div className="col-span-2">
+                                                                <InputLabel
+                                                                    value={
+                                                                        "Keaktifan"
+                                                                    }
+                                                                />
+                                                                <select
+                                                                    onChange={(
+                                                                        e
+                                                                    ) =>
+                                                                        setDataEdit(
+                                                                            "aktif",
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                        )
+                                                                    }
+                                                                    value={
+                                                                        dataEdit.aktif
+                                                                    }
+                                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-1"
+                                                                >
+                                                                    <option
+                                                                        value={
+                                                                            "yes"
+                                                                        }
+                                                                    >
+                                                                        Ya
+                                                                    </option>
+                                                                    <option
+                                                                        value={
+                                                                            "no"
+                                                                        }
+                                                                    >
+                                                                        Tidak
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <button
+                                                            type="submit"
+                                                            className="text-white inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                            disabled={
+                                                                processingEdit
+                                                            }
+                                                        >
+                                                            <EditIcon />
+                                                            {processingEdit
+                                                                ? "Proses..."
+                                                                : "Ubah Tahun Ajaran"}
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </Modal>
                                             <div
                                                 onClick={(e) =>
                                                     handleDelete(e, ta.ta_id)
@@ -313,76 +309,80 @@ const Index = () => {
                     </table>
                 </div>
                 <Pagination datas={tahunAjarans}></Pagination>
-            </div>
-            <Modal
-                show={createModal} maxWidth=""
-                onClose={() => setCreateModal(!createModal)}
-            >
-                <div className="relative bg-white rounded-lg shadow-sm">
-                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                        <h3 className="text-lg font-semibold text-gray-900 ">
-                            tambah Tahun Ajaran
-                        </h3>
-                        <button
-                            type="button"
-                            onClick={() => setCreateModal(!createModal)}
-                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                        >
-                            <ExitIcon />
-                            <span className="sr-only">Close modal</span>
-                        </button>
-                    </div>
-                    <form onSubmit={handleStore} className="p-4 md:p-5">
-                        <div className="grid gap-4 mb-4 grid-cols-2">
-                            <div className="col-span-2">
-                                <InputLabel
-                                    value={"Tahun Ajaran contoh (2016 - 2017) "}
-                                />
-                                <TextInput
-                                    id="tahun"
-                                    type="text"
-                                    name="tahun"
-                                    value={data.tahun}
-                                    className="mt-1 block w-full"
-                                    onChange={(e) =>
-                                        setData("tahun", e.target.value)
-                                    }
-                                />
-                                <InputError
-                                    message={errors.tahun}
-                                    className="mt-2"
-                                />
-                            </div>
-                            <div className="col-span-2">
-                                <InputLabel value={"Keaktifan"} />
-                                <TextInput
-                                    id="aktif"
-                                    type="text"
-                                    name="aktif"
-                                    readOnly
-                                    value={data.aktif}
-                                    className="mt-1 block w-full"
-                                    onChange={(e) =>
-                                        setData("aktif", e.target.value)
-                                    }
-                                />
-                                <InputError
-                                    message={errors.aktif}
-                                    className="mt-2"
-                                />
-                            </div>
+                <Modal
+                    show={createModal}
+                    onClose={() => setCreateModal(!createModal)}
+                >
+                    <div className="relative bg-white rounded-lg shadow-sm">
+                        <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                            <h3 className="text-lg font-semibold text-gray-900 ">
+                                tambah Tahun Ajaran
+                            </h3>
+                            <button
+                                type="button"
+                                onClick={() => setCreateModal(!createModal)}
+                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                            >
+                                <ExitIcon />
+                                <span className="sr-only">Close modal</span>
+                            </button>
                         </div>
-                        <button
-                            type="submit"
-                            className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                            disabled={processing}
-                        >
-                            <PlusIcon />
-                            {processing ? "Proses..." : "Tambah Tahun Ajaran"}
-                        </button>
-                    </form>
-                </div>
-            </Modal>
+                        <form onSubmit={handleStore} className="p-4 md:p-5">
+                            <div className="grid gap-4 mb-4 grid-cols-2">
+                                <div className="col-span-2">
+                                    <InputLabel
+                                        value={
+                                            "Tahun Ajaran contoh (2016 - 2017) "
+                                        }
+                                    />
+                                    <TextInput
+                                        id="tahun"
+                                        type="text"
+                                        name="tahun"
+                                        value={data.tahun}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("tahun", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.tahun}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div className="col-span-2">
+                                    <InputLabel value={"Keaktifan"} />
+                                    <TextInput
+                                        id="aktif"
+                                        type="text"
+                                        name="aktif"
+                                        readOnly
+                                        value={data.aktif}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("aktif", e.target.value)
+                                        }
+                                    />
+                                    <InputError
+                                        message={errors.aktif}
+                                        className="mt-2"
+                                    />
+                                </div>
+                            </div>
+                            <button
+                                type="submit"
+                                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                disabled={processing}
+                            >
+                                <PlusIcon />
+                                {processing
+                                    ? "Proses..."
+                                    : "Tambah Tahun Ajaran"}
+                            </button>
+                        </form>
+                    </div>
+                </Modal>
+            </div>
         </AuthenticatedLayout>
     );
 };

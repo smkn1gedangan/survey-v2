@@ -1,4 +1,3 @@
-import Canvas from "@/Components/Canavs";
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
@@ -64,7 +63,7 @@ const Welcome = () => {
                         </p>
                         <div className="text-sm font-medium text-center">
                             Kunjungi juga web resmi <span>Smkn 1 Gedangan</span>{" "}
-                            <a href="" className="text-blue-800">
+                            <a href="https://smkn1gedangan-malang.sch.id/" target="_blank" className="text-blue-800">
                                 di sini
                             </a>
                         </div>

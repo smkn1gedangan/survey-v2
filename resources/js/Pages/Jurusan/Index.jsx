@@ -57,7 +57,6 @@ const Index = () => {
                 setCreateModal(false);
                 reset();
             },
-        
         });
     };
 
@@ -81,13 +80,12 @@ const Index = () => {
                 seteditModal(null);
                 reset();
             },
-         
         });
     };
 
     return (
         <AuthenticatedLayout>
-            <Head title="Jurusan"/>
+            <Head title="Jurusan" />
             <TitlePage
                 title={"Jurusan"}
                 onClick={() => setCreateModal(true)}
@@ -151,126 +149,124 @@ const Index = () => {
                                             >
                                                 <EditIcon />
                                             </div>
-                                            {editModal?.id === jurusan.id && (
-                                                <Modal
-                                                    show={editModal.active}
-                                                    onClose={() =>
-                                                        seteditModal(null)
-                                                    }
-                                                >
-                                                    <div className="relative bg-white rounded-lg shadow-sm ">
-                                                        <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                                                            <h3 className="text-lg font-semibold text-gray-900 ">
-                                                                Ubah Jurusan
-                                                            </h3>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() =>
-                                                                    seteditModal(
-                                                                        null
-                                                                    )
-                                                                }
-                                                                className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                                                            >
-                                                                <ExitIcon />
-                                                                <span className="sr-only">
-                                                                    Close modal
-                                                                </span>
-                                                            </button>
-                                                        </div>
-                                                        <form
-                                                            onSubmit={
-                                                                handleUpdate
+                                            <Modal
+                                                show={
+                                                    editModal?.id === jurusan.id
+                                                }
+                                                onClose={() =>
+                                                    seteditModal(null)
+                                                }
+                                            >
+                                                <div className="relative bg-white rounded-lg shadow-sm ">
+                                                    <div className="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                                                        <h3 className="text-lg font-semibold text-gray-900 ">
+                                                            Ubah Jurusan
+                                                        </h3>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                seteditModal(
+                                                                    null
+                                                                )
                                                             }
-                                                            className="p-4 md:p-5"
+                                                            className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
                                                         >
-                                                            <div className="grid gap-4 mb-4 grid-cols-2">
-                                                                <div className="col-span-2">
-                                                                    <InputLabel
-                                                                        value={
-                                                                            "Nama Jurusan"
-                                                                        }
-                                                                    />
-                                                                    <TextInput
-                                                                        id="nama"
-                                                                        type="text"
-                                                                        name="nama"
-                                                                        value={
-                                                                            dataEdit.nama
-                                                                        }
-                                                                        className="mt-1 block w-full"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setDataEdit(
-                                                                                "nama",
-                                                                                e
-                                                                                    .target
-                                                                                    .value
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                    <InputError
-                                                                        message={
-                                                                            errorsEdit.nama
-                                                                        }
-                                                                        className="mt-2"
-                                                                    />
-                                                                </div>
-                                                                <div className="col-span-2">
-                                                                    <InputLabel
-                                                                        value={
-                                                                            "Nama Samaran"
-                                                                        }
-                                                                    />
-                                                                    <InputError
-                                                                        message={
-                                                                            "Jangan di Ubah Saat Survey Berlangsung ,Pengelompokkan Data Bisa Terbagi"
-                                                                        }
-                                                                    />
-                                                                    <TextInput
-                                                                        id="samaran"
-                                                                        type="text"
-                                                                        name="samaran"
-                                                                        value={
-                                                                            dataEdit.samaran
-                                                                        }
-                                                                        className="mt-1 block w-full"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setDataEdit(
-                                                                                "samaran",
-                                                                                e
-                                                                                    .target
-                                                                                    .value
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                    <InputError
-                                                                        message={
-                                                                            errorsEdit.nama
-                                                                        }
-                                                                        className="mt-2"
-                                                                    />
-                                                                </div>
-                                                            </div>
-                                                            <button
-                                                                type="submit"
-                                                                className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                                                disabled={
-                                                                    processingEdit
-                                                                }
-                                                            >
-                                                                <PlusIcon />
-                                                                {processingEdit
-                                                                    ? "Proses..."
-                                                                    : "Ubah Jurusan"}
-                                                            </button>
-                                                        </form>
+                                                            <ExitIcon />
+                                                            <span className="sr-only">
+                                                                Close modal
+                                                            </span>
+                                                        </button>
                                                     </div>
-                                                </Modal>
-                                            )}
+                                                    <form
+                                                        onSubmit={handleUpdate}
+                                                        className="p-4 md:p-5"
+                                                    >
+                                                        <div className="grid gap-4 mb-4 grid-cols-2">
+                                                            <div className="col-span-2">
+                                                                <InputLabel
+                                                                    value={
+                                                                        "Nama Jurusan"
+                                                                    }
+                                                                />
+                                                                <TextInput
+                                                                    id="nama"
+                                                                    type="text"
+                                                                    name="nama"
+                                                                    value={
+                                                                        dataEdit.nama
+                                                                    }
+                                                                    className="mt-1 block w-full"
+                                                                    onChange={(
+                                                                        e
+                                                                    ) =>
+                                                                        setDataEdit(
+                                                                            "nama",
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <InputError
+                                                                    message={
+                                                                        errorsEdit.nama
+                                                                    }
+                                                                    className="mt-2"
+                                                                />
+                                                            </div>
+                                                            <div className="col-span-2">
+                                                                <InputLabel
+                                                                    value={
+                                                                        "Nama Samaran"
+                                                                    }
+                                                                />
+                                                                <InputError
+                                                                    message={
+                                                                        "Jangan di Ubah Saat Survey Berlangsung ,Pengelompokkan Data Bisa Terbagi"
+                                                                    }
+                                                                />
+                                                                <TextInput
+                                                                    id="samaran"
+                                                                    type="text"
+                                                                    name="samaran"
+                                                                    value={
+                                                                        dataEdit.samaran
+                                                                    }
+                                                                    className="mt-1 block w-full"
+                                                                    onChange={(
+                                                                        e
+                                                                    ) =>
+                                                                        setDataEdit(
+                                                                            "samaran",
+                                                                            e
+                                                                                .target
+                                                                                .value
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <InputError
+                                                                    message={
+                                                                        errorsEdit.nama
+                                                                    }
+                                                                    className="mt-2"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <button
+                                                            type="submit"
+                                                            className="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                            disabled={
+                                                                processingEdit
+                                                            }
+                                                        >
+                                                            <PlusIcon />
+                                                            {processingEdit
+                                                                ? "Proses..."
+                                                                : "Ubah Jurusan"}
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </Modal>
                                             <div
                                                 onClick={(e) =>
                                                     handleDelete(

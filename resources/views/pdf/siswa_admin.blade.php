@@ -51,8 +51,12 @@
             <div>{{ \Carbon\Carbon::parse($siswa->created_date)->format('d-m-Y') }}</div>
         </div>
         <div class="row">
-            <div class="label">Nama Orang Tua/Wali</div>
-            <div>{{ $siswa->nama_orang_tua_wali }}</div>
+            <div class="label">Nama Ayah</div>
+            <div>{{ $siswa->nama_ayah }}</div>
+        </div>
+        <div class="row">
+            <div class="label">Nama Ibu</div>
+            <div>{{ $siswa->nama_ibu ===""?"Tidak Ada Data": $siswa->nama_ibu }}</div>
         </div>
         <div class="row">
             <div class="label">Pekerjaan Orang Tua/Wali</div>

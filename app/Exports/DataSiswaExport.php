@@ -31,7 +31,8 @@ class DataSiswaExport implements FromCollection,WithHeadings
                 $query->where(function ($q) {
                     $q->where('nama_calon_siswa', 'like', '%' . $this->request->search . '%')
                     ->orWhere('asal_sekolah', 'like', '%' . $this->request->search . '%')
-                    ->orWhere('nama_orang_tua_wali', 'like', '%' . $this->request->search . '%');
+                    ->orWhere('nama_ayah', 'like', '%' . $this->request->search . '%')
+                    ->orWhere('nama_ibu', 'like', '%' . $this->request->search . '%');
                 });
             })->orderBy($this->request->input("sort_by")?:"created_date",$this->request->input("sort_order","asc"))
             ->get()->map(function($item){
@@ -40,7 +41,8 @@ class DataSiswaExport implements FromCollection,WithHeadings
                     "TTL"=> $item->tempat_lahir_calon_siswa . "," .$item->tanggal_lahir_calon_siswa,
                     "Asal Sekolah"=> $item->asal_sekolah,
                     "Jurusan"=> $item->jurusan,
-                    "Nama Orang Tua Wali"=> $item->nama_orang_tua_wali,
+                    "Nama Ayah"=> $item->nama_ayah,
+                    "Nama Ibu"=> $item->nama_ibu,
                     "Tanggal Daftar"=> $item->created_date,
                     "Status Penerimaan"=> $item->status_penerimaan === ""?"Pending":$item->status_penerimaan,
                 ];
@@ -54,7 +56,7 @@ class DataSiswaExport implements FromCollection,WithHeadings
                     "TTL",
                     "Asal Sekolah",
                     "Jurusan",
-                    "Nama Orang Tua Wali",
+                    "Nama Ayah","Nama Ibu",
                     "Tanggal Daftar",
                     "Status Penerimaan"
         ];
