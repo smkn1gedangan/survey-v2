@@ -5,6 +5,7 @@ use App\Http\Controllers\DataSiswaController;
 use App\Http\Controllers\ExpController;
 use App\Http\Controllers\FeController;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\MasukanController;
 use App\Http\Controllers\PekerjaanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TahunAjaranController;
@@ -15,12 +16,15 @@ use Inertia\Inertia;
 Route::controller(FeController::class)->group(function(){
     Route::get("/","welcome")->name("welcome");
     Route::get("/responden","responden")->name("responden");
+    Route::get("/statistik","statistik")->name("statistik");
+    Route::resource("masukan",MasukanController::class);
     Route::post("/store-data-siswa","storeDataSiswa")->name("store-data-siswa");
     Route::get("/export_data_siswa_to_pdf/{id}",[ExpController::class,"exportDataSiswaToPdf"])->name("export_data_siswa_to_pdf");
 });
 
-Route::middleware(["auth","verified"])->group(function(){
+Route::middleware(["auth","verified","checkRole"])->group(function(){
     Route::get("/dashboard",[DashboardController::class,"index"])->name("dashboard");
+    Route::delete("/delMasukan/{id}",[DashboardController::class,"hapusMasukan"])->name("delMasukan");
     Route::resource("tahunAjaran",TahunAjaranController::class);
     Route::resource("jurusan",JurusanController::class);
     Route::resource("pekerjaan",PekerjaanController::class);

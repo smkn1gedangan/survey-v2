@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DataSiswa;
+use App\Models\Jurusan;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -15,6 +16,7 @@ class DataSiswaController extends Controller
     public function index(Request $request)
     {
         $tahunAjarans = TahunAjaran::orderByRaw("aktif = 'yes' desc")->get();
+        $jurusans = Jurusan::get();
 
 
         $dataSiswas = DataSiswa::query()->with("psb_tahun_ajaran");
@@ -25,6 +27,9 @@ class DataSiswaController extends Controller
                 $query->whereHas('psb_tahun_ajaran', function ($q2) use ($request) {
                     $q2->where('tahun_ajaran', $request->tahun);
                 });
+            })
+            ->when($request->filtering,function($query) use($request){
+                $query->where("jurusan","=",$request->filtering);
             })
             ->when($request->search, function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
@@ -41,7 +46,8 @@ class DataSiswaController extends Controller
         return Inertia::render("DataSiswa/Index",[
             "dataSiswas" => $dataSiswas,
             "tahunAjarans" => $tahunAjarans,
-            "filters"=> $request->only(["tahun","search","sort_by","sort_order"])
+            "jurusans" => $jurusans,
+            "filters"=> $request->only(["tahun","search","sort_by","sort_order","filtering"])
         ]);
     }
 

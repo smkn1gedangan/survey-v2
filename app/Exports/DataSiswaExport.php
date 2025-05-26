@@ -27,6 +27,9 @@ class DataSiswaExport implements FromCollection,WithHeadings
                     $q2->where('tahun_ajaran', $this->request->tahun);
                 });
             })
+            ->when($this->request->filtering,function($query) {
+                $query->where("jurusan","=",$this->request->filtering);
+            })
             ->when($this->request->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('nama_calon_siswa', 'like', '%' . $this->request->search . '%')

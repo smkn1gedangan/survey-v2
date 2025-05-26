@@ -14,11 +14,22 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $datas = [
+            [
             "name"=>"admin",
-            "email"=>"example@gmail.com",
-            "password"=>"7qvt6t2738"
+            "email"=>"jonoundo88@gmail.com",
+            "password"=>"7qvt6t2738",
+            "role"=>"admin"
+            ],
+            [
+            "name"=>"admin",
+            "email"=>"paksutrisno934@gmail.com",
+            "password"=>"4dm1n3219",
+            "role"=>"admin"
+            ]
         ];
 
-        User::create($datas);
+        foreach ($datas as $data) {
+            User::updateOrCreate(["email"=>$data["email"]],$data);
+        }
     }
 }

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = () => {
+const Footer = ({children}) => {
     return (
         <footer className="bg-white rounded-lg shadow-sm m-4">
             <div className="w-full max-w-screen-xl mx-auto p-4 md:py-8">
@@ -15,7 +15,7 @@ const Footer = () => {
                     </section>
                 </div>
                 <hr className="my-6 border-gray-200 sm:mx-auto  lg:my-8" />
-                <span className="block text-sm text-gray-900 sm:text-center ">
+                <span className="block text-sm text-gray-900 text-center ">
                     ©{" "}
                     {`${new Date().getFullYear()} - ${new Date().getMonth() + 1} - ${new Date().getDate()}`}{" "}
                     &nbsp;&nbsp;
@@ -27,6 +27,7 @@ const Footer = () => {
                     </a>
                     . All Rights Reserved.
                 </span>
+                {children}
             </div>
         </footer>
     );

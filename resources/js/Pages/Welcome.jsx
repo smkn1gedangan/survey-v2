@@ -46,13 +46,13 @@ const Welcome = () => {
         });
     };
     useEffect(() => {
-        setData("ta_id", ta.ta_id);
+        setData("ta_id", ta?.ta_id);
     }, [ta]);
 
     return (
-        <div className="w-full min-h-screen bg-gray-50">
-            <Head title="Isi Survey"/>
-            <Navbar></Navbar>
+        <div className={`${ta && "bg-gray-50"} w-full min-h-screen `}>
+            <Head title="Isi Survey" />
+            <Navbar />
             {ta ? (
                 <>
                     {" "}
@@ -63,7 +63,11 @@ const Welcome = () => {
                         </p>
                         <div className="text-sm font-medium text-center">
                             Kunjungi juga web resmi <span>Smkn 1 Gedangan</span>{" "}
-                            <a href="https://smkn1gedangan-malang.sch.id/" target="_blank" className="text-blue-800">
+                            <a
+                                href="https://smkn1gedangan-malang.sch.id/"
+                                target="_blank"
+                                className="text-blue-800"
+                            >
                                 di sini
                             </a>
                         </div>
@@ -424,10 +428,23 @@ const Welcome = () => {
                     </section>
                 </>
             ) : (
-                <h1 className="mb-2 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl text-center p-4">
-                    Mohon maaf, saat ini tidak sedang membuka pendaftaran.
-                    <br>Terima kasih atas kunjungannya!</br>
-                </h1>
+                <div className="min-h-80 p-4 space-y-2">
+                    <h1 className=" text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl text-center ">
+                        Mohon maaf, saat ini tidak sedang membuka pendaftaran.
+                        <br />
+                        Terima kasih atas kunjungannya!
+                    </h1>
+                    <div className="text-sm font-medium text-center">
+                        Kunjungi juga web resmi <span>Smkn 1 Gedangan</span>{" "}
+                        <a
+                            href="https://smkn1gedangan-malang.sch.id/"
+                            target="_blank"
+                            className="text-blue-800"
+                        >
+                            di sini
+                        </a>
+                    </div>
+                </div>
             )}
             <Footer />
         </div>

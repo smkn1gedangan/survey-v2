@@ -7,6 +7,7 @@ use App\Models\Jurusan;
 use App\Models\Pekerjaan;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 
@@ -98,13 +99,18 @@ class FeController extends Controller
 
     public function responden(Request $request)  {
         $tahunAjarans = TahunAjaran::orderByRaw("aktif = 'yes' desc")->get();
+        $jurusans = Jurusan::get();
         $dataSiswas = DataSiswa::query()->with("psb_tahun_ajaran");
+
         $dataSiswas = DataSiswa::with('psb_tahun_ajaran')
             ->when($request->tahun, function ($query) use ($request) {
                 // Filter tahun dulu jika ada
                 $query->whereHas('psb_tahun_ajaran', function ($q2) use ($request) {
                     $q2->where('tahun_ajaran', $request->tahun);
                 });
+            })
+            ->when($request->filtering,function($query) use($request){
+                $query->where("jurusan","=",$request->filtering);
             })
             ->when($request->search, function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
@@ -121,8 +127,29 @@ class FeController extends Controller
 
         return Inertia::render("Responden",[
             "dataSiswas" => $dataSiswas,
+            "jurusans" => $jurusans,
             "tahunAjarans" => $tahunAjarans,
-            "filters"=> $request->only(["tahun","search","sort_by","sort_order"])
+            "filters"=> $request->only(["tahun","search","sort_by","sort_order","filtering"])
         ]);
     }
+    public function statistik(Request $request)  {
+        $data = DataSiswa::with("psb_tahun_ajaran")
+        ->selectRaw("psb_tahun_ajaran.tahun_ajaran as tahun,count(*) as total")
+        ->join("psb_tahun_ajaran","psb_tahun_ajaran.ta_id","=","psb_data_siswa.ta_id")
+        ->groupBy("psb_tahun_ajaran.tahun_ajaran")
+        ->orderBy("psb_tahun_ajaran.tahun_ajaran","asc")
+        ->get();
+
+        $dataDonut = DataSiswa::where("ta_id",$request->input("ta"))->select("jurusan",DB::raw("count(*) as total")) ->groupBy("jurusan")->get();
+
+
+        $tahunAjarans = TahunAjaran::orderBy("tahun_ajaran","asc")->get();
+        return Inertia::render("Statistik",[
+            "data"=>$data,
+            "dataDonut"=>$dataDonut,
+            "tahunAjarans"=>$tahunAjarans,
+            "filters"=> $request->only(["ta"])
+        ]);
+    }
+    
 }

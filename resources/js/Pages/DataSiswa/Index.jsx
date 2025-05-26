@@ -20,7 +20,7 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
 const Index = () => {
-    const { dataSiswas, tahunAjarans, filters } = usePage().props;
+    const { dataSiswas, tahunAjarans, filters,jurusans } = usePage().props;
     const [editModal, seteditModal] = useState(null);
     const [dataShow, setDataShow] = useState(null);
     const [sortModal, setSortModal] = useState(false);
@@ -31,6 +31,7 @@ const Index = () => {
         reset,
     } = useForm({
         tahun: filters.tahun ?? "",
+        filtering: filters.filtering ?? "",
         search: filters.search ?? "",
         sort_by: filters.sort_by ?? "",
         sort_order: filters.sort_order ?? "asc",
@@ -61,6 +62,7 @@ const Index = () => {
         if (updated.sort_by !== "") params.sort_by = updated.sort_by;
         if (updated.sort_order !== "" && updated.sort_by !== "")
             params.sort_order = updated.sort_order;
+        if (updated.filtering !== "") params.filtering = updated.filtering;
 
         router.get(route("dataSiswa.index"), params, {
             preserveScroll: true,
@@ -126,6 +128,7 @@ const Index = () => {
                         sort_by: dataSearch.sort_by,
                         sort_order: dataSearch.sort_order,
                         tahun: dataSearch.tahun,
+                        filtering: dataSearch.filtering,
                     });
                 }}
                 nameRoute={"Export To Excel"}
@@ -785,6 +788,36 @@ const Index = () => {
                                     </select>
                                 </div>
                             )}
+                        </div>
+                    </div>
+                    <div className="grid gap-4 mb-4 grid-cols-1 p-4">
+                        <h3 className="text-lg font-semibold text-gray-900 ">
+                            Filtering Jurusan
+                        </h3>
+                        <div>
+                            <div className="grid gap-4 mb-4 grid-cols-1">
+                                <div className="">
+                                    <InputLabel value={"Jurusan"} />
+                                    <select
+                                        onChange={(e) => handleSearchChange(e)}
+                                        value={dataSearch.filtering}
+                                        id="filtering"
+                                        name="filtering"
+                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-stone-500 focus:border-stone-500 block w-full p-2.5 "
+                                    >
+                                        <option value="">Default</option>
+                                        {jurusans.length > 0 &&
+                                            jurusans.map((jurusan) => (
+                                                <option
+                                                    key={jurusan.id}
+                                                    value={jurusan.samaran}
+                                                >
+                                                    {jurusan.nama}
+                                                </option>
+                                            ))}
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
