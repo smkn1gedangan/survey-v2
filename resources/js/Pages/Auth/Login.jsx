@@ -7,7 +7,7 @@ import { Head, Link, useForm } from "@inertiajs/react";
 
 export default function Login({ status, canResetPassword }) {
     const { data, setData, post, processing, errors, reset } = useForm({
-        username: "",
+        email: "",
         password: "",
         remember: false,
     });
@@ -46,7 +46,6 @@ export default function Login({ status, canResetPassword }) {
                                 name="email"
                                 value={data.email}
                                 className="mt-1 block w-full"
-                                isFocused={true}
                                 onChange={(e) =>
                                     setData("email", e.target.value)
                                 }

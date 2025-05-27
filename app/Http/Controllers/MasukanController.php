@@ -36,16 +36,16 @@ class MasukanController extends Controller
         $validated = $request->validate([
             "nama"=>"string|min:5",
             "email"=>"string|email",
-            "user_id"=>"required|unique:users,id",
+            "user_id"=>"required|unique:masukans,user_id",
             "masukan"=>"required|min:5",
         ],[
             "user_id.unique"=> "Setiap 1 akun hanya dibatasi 1 Pengiriman Feedback",
             "masukan.required"=> "Feedback Wajib Diisi dan Minimal 5 Huruf",
         ]);
 
-        if(!$request->user()->hasVerifiedEmail()){
-            return redirect()->route('verification.notice');
-        };
+        // if(!$request->user()->hasVerifiedEmail()){
+        //     return redirect()->route('verification.notice');
+        // };
 
         Masukan::create([
             "user_id"=>$validated["user_id"],

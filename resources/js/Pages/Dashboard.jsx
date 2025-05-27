@@ -1,3 +1,4 @@
+import Pagination from "@/Components/Pagination";
 import { AlertConfirm } from "@/Helper/Alert";
 import { LineChart, DoughnutChart } from "@/Helper/Chart";
 import DeleteIcon from "@/Icon/DeleteIcon";
@@ -45,7 +46,7 @@ const Dashboard = () => {
                 onSuccess: () => {
                     Swal.fire({
                         title: "Sukses!",
-                        text: "Jurusan Berhasil Dihapus.",
+                        text: "Data Feedback Berhasil Dihapus.",
                         icon: "success",
                         timer: 1000,
                     });
@@ -53,15 +54,13 @@ const Dashboard = () => {
             });
         AlertConfirm(text, "warning", cb);
     };
-    useEffect(()=>{
-        console.log(masukans)
-    })
     return (
         <AuthenticatedLayout>
             <Head title="Dashboard" />
             <div className="flex gap-1 justify-center flex-wrap">
                 <h1 className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900">
-                    Selamat Datang {auth.user?.name} , Semoga Harimu Menyenangkan 😊
+                    Selamat Datang {auth.user?.name} , Semoga Harimu
+                    Menyenangkan 😊
                 </h1>
                 <div className="my-6 w-full">
                     <select
@@ -154,7 +153,7 @@ const Dashboard = () => {
                                             return `${day}-${month}-${year}`;
                                         })()}
                                     </td>
-                                    <td className="px-4 text-center py-4">
+                                    <td className="px-4 text-center py-4 flex justify-center">
                                         <div
                                             onClick={(e) =>
                                                 handleDelete(
@@ -173,8 +172,8 @@ const Dashboard = () => {
                         ) : (
                             <tr>
                                 <td
-                                    className="p-2 text-sm font-medium text-center"
-                                    colSpan={3}
+                                    className="p-4 text-sm font-medium text-center"
+                                    colSpan={4}
                                 >
                                     Tidak ada feedback di tambahkan
                                 </td>
@@ -182,6 +181,7 @@ const Dashboard = () => {
                         )}
                     </tbody>
                 </table>
+                <Pagination datas={masukans} />
             </div>
         </AuthenticatedLayout>
     );

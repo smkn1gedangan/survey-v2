@@ -240,7 +240,10 @@ const Responden = () => {
                                                     )}
                                             </td>
                                             <td className="px-4 text-center py-4 capitalize">
-                                                {dataSiswa.jurusan}
+                                                {dataSiswa.jurusan ===
+                                                "(Kosong)"
+                                                    ? "Tidak Memilih"
+                                                    : dataSiswa.jurusan}
                                             </td>
 
                                             <td className="px-4 text-center py-4 capitalize">
@@ -390,9 +393,10 @@ const Responden = () => {
                                                                             </div>
                                                                             <div className="table-cell">
                                                                                 :{" "}
-                                                                                {
-                                                                                    dataShow.jurusan
-                                                                                }
+                                                                                {dataShow.jurusan ===
+                                                                                "(Kosong)"
+                                                                                    ? "Tidak Memilih"
+                                                                                    : dataShow.jurusan}
                                                                             </div>
                                                                         </div>
 
@@ -599,33 +603,30 @@ const Responden = () => {
                             )}
                         </div>
                     </div>
-                    <div className="grid gap-4 mb-4 grid-cols-1 p-4">
+                    <div className="p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
                         <h3 className="text-lg font-semibold text-gray-900 ">
                             Filtering Jurusan
                         </h3>
-                        <div>
-                            <div className="grid gap-4 mb-4 grid-cols-1">
-                                <div className="">
-                                    <InputLabel value={"Jurusan"} />
-                                    <select
-                                        onChange={(e) => handleSearchChange(e)}
-                                        value={dataSearch.filtering}
-                                        id="filtering"
-                                        name="filtering"
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-stone-500 focus:border-stone-500 block w-full p-2.5 "
-                                    >
-                                        <option value="">Default</option>
-                                        {jurusans.length > 0 &&
-                                            jurusans.map((jurusan) => (
-                                                <option
-                                                    key={jurusan.id}
-                                                    value={jurusan.samaran}
-                                                >
-                                                    {jurusan.nama}
-                                                </option>
-                                            ))}
-                                    </select>
-                                </div>
+                        <div className="grid gap-4 mb-4 grid-cols-1">
+                            <div className="">
+                                <select
+                                    onChange={(e) => handleSearchChange(e)}
+                                    value={dataSearch.filtering}
+                                    id="filtering"
+                                    name="filtering"
+                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-stone-500 focus:border-stone-500 block w-full p-2.5 "
+                                >
+                                    <option value="">Default</option>
+                                    {jurusans.length > 0 &&
+                                        jurusans.map((jurusan) => (
+                                            <option
+                                                key={jurusan.id}
+                                                value={jurusan.samaran}
+                                            >
+                                                {jurusan.nama}
+                                            </option>
+                                        ))}
+                                </select>
                             </div>
                         </div>
                     </div>

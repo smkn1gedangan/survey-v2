@@ -2,7 +2,7 @@ import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
-import { AlertSuccess } from "@/Helper/Alert";
+import { AlertError, AlertSuccess } from "@/Helper/Alert";
 import Footer from "@/Layouts/Footer";
 import Navbar from "@/Layouts/Navbar";
 import { useGetProvince, useGetRegencies } from "@/Services/Api_call";
@@ -48,7 +48,11 @@ const Welcome = () => {
     useEffect(() => {
         setData("ta_id", ta?.ta_id);
     }, [ta]);
-
+    // useEffect(() => {
+    //     if (flash?.error) {
+    //         AlertError(`${flash.error}`,10000);
+    //     }
+    // }, [flash?.error]);
     return (
         <div className={`${ta && "bg-gray-50"} w-full min-h-screen `}>
             <Head title="Isi Survey" />

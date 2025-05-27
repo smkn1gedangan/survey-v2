@@ -32,12 +32,12 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
-        if(Auth::user()->role === "user"){
-            if (!Auth::user()->hasVerifiedEmail()) {
-                return redirect()->route('verification.notice');
-            }
-            return redirect()->intended(route("masukan.index"))->with("success","Anda Berhasil Login");
-        }
+        // if(Auth::user()->role === "user"){
+        //     if (!Auth::user()->hasVerifiedEmail()) {
+        //         return redirect()->route('verification.notice');
+        //     }
+        //     return redirect()->intended(route("masukan.index"))->with("success","Anda Berhasil Login");
+        // }
         return redirect()->intended(route("dashboard", absolute: false));
     }
 

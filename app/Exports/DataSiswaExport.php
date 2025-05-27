@@ -43,7 +43,7 @@ class DataSiswaExport implements FromCollection,WithHeadings
                     "Nama Calon Siswa"=>$item->nama_calon_siswa,
                     "TTL"=> $item->tempat_lahir_calon_siswa . "," .$item->tanggal_lahir_calon_siswa,
                     "Asal Sekolah"=> $item->asal_sekolah,
-                    "Jurusan"=> $item->jurusan,
+                    "Jurusan"=> $item->jurusan === "(Kosong)" ?"Tidak Memilih":$item->jurusan,
                     "Nama Ayah"=> $item->nama_ayah,
                     "Nama Ibu"=> $item->nama_ibu,
                     "Tanggal Daftar"=> $item->created_date,

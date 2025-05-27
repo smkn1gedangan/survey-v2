@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class checkRoleMiddleware
+class CheckRole
 {
     /**
      * Handle an incoming request.
@@ -20,6 +20,6 @@ class checkRoleMiddleware
 
             return $next($request);
         };
-        return redirect()->route("welcome")->with("error","Anda Bukan Admin");
+        return redirect()->route("welcome")->with("error","Anda Bukan Admin, SIlahkan Login Dengan Role Admin ");
     }
 }

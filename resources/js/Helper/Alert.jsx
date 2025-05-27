@@ -32,3 +32,19 @@ export const AlertSuccess = (text, timer) => {
         },
     });
 };
+export const AlertError = (text, timer) => {
+    Swal.fire({
+        position: "top-end",
+        icon: "error",
+        text: text,
+        showConfirmButton: false,
+        timer: timer ?? 2000,
+        draggable: true,
+        showClass: {
+            popup: "animate__animated animate__fadeInUp animate__faster",
+        },
+        hideClass: {
+            popup: "animate__animated animate__fadeOutDown animate__faster",
+        },
+    });
+};

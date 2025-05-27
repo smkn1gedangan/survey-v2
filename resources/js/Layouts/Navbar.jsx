@@ -1,9 +1,24 @@
-import React, { useState } from "react";
+import { Transition } from "@headlessui/react";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
     const [openNav, setOpenNav] = useState(false);
+
+    useEffect(() => {
+        const mediaQuery = window.matchMedia("(min-width: 640px)");
+
+        setOpenNav(mediaQuery.matches);
+
+        const handleResize = () => {
+            setOpenNav(mediaQuery.matches);
+        };
+        mediaQuery.addEventListener("change", handleResize);
+        return () => {
+            mediaQuery.removeEventListener("change", handleResize);
+        };
+    }, []);
     return (
-        <nav className="bg-white border-gray-200 dark:bg-gray-900">
+        <nav className={`${!openNav && "h-16"} bg-gray-900 border-gray-200  `}>
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <a
                     href={route("welcome")}
@@ -38,15 +53,17 @@ const Navbar = () => {
                     </svg>
                 </button>
                 <div
-                    className={`${
-                        openNav ? "block" : "hidden"
+                    className={`max-sm:transition-all max-sm:duration-300 max-sm:ease-in-out max-sm:transform ${
+                        openNav
+                            ? "max-sm:opacity-100 max-sm:translate-y-0 max-sm:scale-100"
+                            : "opacity-0 -translate-y-full scale-0 pointer-events-none invisible"
                     } w-full md:block md:w-auto`}
                 >
-                    <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                    <ul className="font-medium flex flex-col p-4 md:p-0 mt-4 border  rounded-lg  md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 ">
                         <li>
                             <a
                                 href={route("welcome")}
-                                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                className="block py-2 px-3 text-gray-50  rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 "
                             >
                                 Isi Survey
                             </a>
@@ -55,7 +72,7 @@ const Navbar = () => {
                         <li>
                             <a
                                 href={route("responden")}
-                                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                className="block py-2 px-3 text-gray-50  rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
                             >
                                 Responden / Peserta
                             </a>
@@ -63,7 +80,7 @@ const Navbar = () => {
                         <li>
                             <a
                                 href={route("statistik")}
-                                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                className="block py-2 px-3 text-gray-50  rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
                             >
                                 Statistik
                             </a>
@@ -71,7 +88,7 @@ const Navbar = () => {
                         <li>
                             <a
                                 href={route("masukan.index")}
-                                className="block py-2 px-3 text-gray-900 rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                                className="block py-2 px-3 text-gray-50  rounded-sm hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0"
                             >
                                 Kontak
                             </a>

@@ -88,7 +88,7 @@ const Contact = () => {
                                 type="email"
                                 id="email"
                                 placeholder="Anda Harus Login / Buat Akun Terlebih Dahulu"
-                                className="block w-full placeholder:text-slate-700"
+                                className="block w-full placeholder:text-slate-700 placeholder:text-sm placeholder:font-medium"
                             />
                             <InputError
                                 message={errors.email}
@@ -107,7 +107,7 @@ const Contact = () => {
                                 readOnly
                                 id="nama"
                                 placeholder="Anda Harus Login / Buat Akun Terlebih Dahulu"
-                                className="block w-full placeholder:text-slate-700"
+                                className="block w-full placeholder:text-slate-700 placeholder:text-sm placeholder:font-medium"
                             />
                             <InputError
                                 message={errors.nama}

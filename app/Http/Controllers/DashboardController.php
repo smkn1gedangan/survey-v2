@@ -20,7 +20,7 @@ class DashboardController extends Controller
         ->orderBy("psb_tahun_ajaran.tahun_ajaran","asc")
         ->get();
 
-        $masukans = Masukan::with("user")->latest()->paginate();
+        $masukans = Masukan::with("user")->latest()->paginate(5);
         $dataDonut = DataSiswa::where("ta_id",$request->input("ta"))->select("jurusan",DB::raw("count(*) as total")) ->groupBy("jurusan")->get();
 
 
