@@ -17,13 +17,13 @@ class UserSeeder extends Seeder
             [
             "name"=>"admin",
             "email"=>"jonoundo88@gmail.com",
-            "password"=>"7qvt6t2738",
+            "password"=>"7",
             "role"=>"admin"
             ],
             [
             "name"=>"admin",
             "email"=>"paksutrisno934@gmail.com",
-            "password"=>"4dm1n3219",
+            "password"=>"4",
             "role"=>"admin"
             ]
         ];
