@@ -17,13 +17,13 @@ class UserSeeder extends Seeder
             [
             "name"=>"admin",
             "email"=>"jonoundo88@gmail.com",
-            "password"=>"7",
+            "password"=>env("PASS_DB_SEED"),
             "role"=>"admin"
             ],
             [
             "name"=>"admin",
             "email"=>"paksutrisno934@gmail.com",
-            "password"=>"4",
+            "password"=>env("PASS_DB_SEED"),
             "role"=>"admin"
             ]
         ];

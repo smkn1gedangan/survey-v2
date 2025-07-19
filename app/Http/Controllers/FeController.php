@@ -7,6 +7,8 @@ use App\Models\Jurusan;
 use App\Models\Pekerjaan;
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
@@ -15,9 +17,17 @@ class FeController extends Controller
 {
     public function welcome()  {
 
-        $pekerjaans = Pekerjaan::orderBy("nama","asc")->get();
-        $jurusans = Jurusan::orderBy("nama","asc")->get();
-        $ta = TahunAjaran::where("aktif","=","yes")->first();
+        $pekerjaans = Cache::remember('pekerjaans', 60 * 60 * 24 * 7, function () {
+            return Pekerjaan::orderBy("nama","asc")->get(); 
+        });
+        $jurusans = Cache::remember('jurusans', 60 * 60 * 24 * 7, function () {
+            return Pekerjaan::latest()->get(); 
+        });
+        
+        $ta = Cache::remember('ta_actives', 60 * 60 * 24 * 7, function () {
+            return $ta = TahunAjaran::where("aktif","=","yes")->first(); 
+        });
+        
         return Inertia::render("Welcome",[
             "pekerjaans"=>$pekerjaans,
             "jurusans"=>$jurusans,
@@ -100,31 +110,46 @@ class FeController extends Controller
     public function responden(Request $request)  {
         $tahunAjarans = TahunAjaran::orderByRaw("aktif = 'yes' desc")->get();
         $jurusans = Jurusan::get();
-        $dataSiswas = DataSiswa::query()->with("psb_tahun_ajaran");
 
-        $dataSiswas = DataSiswa::with('psb_tahun_ajaran')
-            ->when($request->tahun, function ($query) use ($request) {
-                // Filter tahun dulu jika ada
+        $page = $request->input('page', 1);
+        $perPage = 10;
+
+        $query = DataSiswa::with('psb_tahun_ajaran')
+            ->when($request->filled("tahun"), function ($query) use ($request) {
                 $query->whereHas('psb_tahun_ajaran', function ($q2) use ($request) {
-                    $q2->where('tahun_ajaran', $request->tahun);
+                    $q2->where('tahun_ajaran', $request->input("tahun"));
                 });
             })
-            ->when($request->filtering,function($query) use($request){
-                $query->where("jurusan","=",$request->filtering);
+            ->when($request->filled("filtering"), function ($query) use ($request) {
+                $query->where("jurusan", "=", $request->input("filtering"));
             })
-            ->when($request->search, function ($query) use ($request) {
+            ->when($request->filled("search"), function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
-                    $q->where('nama_calon_siswa', 'like', '%' . $request->search . '%')
-                    ->orWhere('asal_sekolah', 'like', '%' . $request->search . '%')
-                    ->orWhere('nama_ayah', 'like', '%' . $request->search . '%')
-                    ->orWhere('nama_ibu', 'like', '%' . $request->search . '%');
+                    $q->where('nama_calon_siswa', 'like', '%' . $request->input("search") . '%')
+                ->orWhere('asal_sekolah', 'like', '%' . $request->input("search") . '%')
+                ->orWhere('nama_ayah', 'like', '%' . $request->input("search") . '%')
+                ->orWhere('nama_ibu', 'like', '%' . $request->input("search") . '%');
                 });
-            })->orderBy($request->input("sort_by","created_date"),$request->input("sort_order","asc"))
-            ->paginate(10)->withQueryString();
+            })
+            ->orderBy($request->input("sort_by", "created_date"), $request->input("sort_order", "asc"));
 
-        
+        if (!$request->filled("tahun")) {
+            // Apply limit if tahun filter is used
+            $items = $query->limit(500)->get();
+            $offset = ($page - 1) * $perPage;
+            $pagedItems = $items->slice($offset, $perPage);
 
-
+            $dataSiswas = new LengthAwarePaginator(
+                $pagedItems->values(), // reset index
+                $items->count(),
+                $perPage,
+                $page,
+                ['path' => $request->url(), 'query' => $request->query()]
+            );
+        } else {
+            // Normal pagination without limit
+            $dataSiswas = $query->paginate($perPage)->withQueryString();
+        }
         return Inertia::render("Responden",[
             "dataSiswas" => $dataSiswas,
             "jurusans" => $jurusans,

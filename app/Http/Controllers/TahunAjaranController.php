@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\TahunAjaran;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -15,7 +17,20 @@ class TahunAjaranController extends Controller
      */
     public function index()
     {
-        $tahunAjarans = TahunAjaran::orderByRaw("aktif = 'yes' desc")->paginate(10);
+        $datas = Cache::remember('tahunAjarans', 60 * 60 * 24 * 7, function () {
+            return TahunAjaran::orderByRaw("aktif = 'yes' desc")->get(); // seluruh data guru
+        });
+        $perPage = 10;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = collect($datas)->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $tahunAjarans = new LengthAwarePaginator(
+            $currentItems,
+            count($datas),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
         return Inertia::render("TahunAjaran/Index",[
             "tahunAjarans"=>$tahunAjarans
         ]);
@@ -54,6 +69,7 @@ class TahunAjaranController extends Controller
             "created_by"=>Auth::user()->name,
             "updated_by"=>Auth::user()->name,
         ]);
+        Cache::delete("tahunAjarans");
         return redirect()->back()->with("success","Berhasil Menambah Tahun Ajaran Baru");
     }
 
@@ -101,7 +117,7 @@ class TahunAjaranController extends Controller
         $taId->aktif = $data["aktif"];
         $taId->save();
 
-
+        Cache::delete("tahunAjarans");
         return redirect()->back()->with("success","Berhasil Mengubah Tahun Ajaran Baru");
     }
 
@@ -114,7 +130,7 @@ class TahunAjaranController extends Controller
         if($taId){
             $taId->delete();
         }
-
+        Cache::delete("tahunAjarans");
         return redirect()->back()->with("success","Berhasil Menambah Tahun Ajaran Baru");
     }
 }

@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Jurusan;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class JurusanController extends Controller
@@ -13,8 +16,15 @@ class JurusanController extends Controller
      */
     public function index()
     {
-        $jurusans = Jurusan::latest()->paginate(10);
-        
+        $datas = Cache::remember("jurusans",60 * 60 * 24 * 7 * 30 * 6 ,function(){
+            return Jurusan::latest()->get();
+        });
+        $currentPage = Paginator::resolveCurrentPage();
+        $perPage =10;
+        $items = collect($datas)->slice(($currentPage -1) * $perPage, $perPage)->values();
+        $jurusans = new LengthAwarePaginator($items,$datas->count(),$perPage,$currentPage,['path' => request()->url(), 'query' => request()->query()]);
+
+
         return Inertia::render("Jurusan/Index",[
             "jurusans"=>$jurusans
         ]);
@@ -50,8 +60,8 @@ class JurusanController extends Controller
             "nama"=>$data["nama"],
             "samaran"=>$data["samaran"],
         ]);
-
-         return redirect()->back()->with("success","Berhasil Menambah Nama Jurusan Baru");
+        Cache::delete("jurusans");
+        return redirect()->back()->with("success","Berhasil Menambah Nama Jurusan Baru");
     }
 
     /**
@@ -93,7 +103,7 @@ class JurusanController extends Controller
         $jurusanId->samaran = $data["samaran"];
         $jurusanId->save();
         
-        
+        Cache::delete("jurusans");
         return redirect()->back()->with("success","Berhasil Mengubah Nama Jurusan Baru");
     }
 
@@ -106,7 +116,7 @@ class JurusanController extends Controller
         if($jurusanId){
             $jurusanId->delete();
         }
-
-         return redirect()->back()->with("success","Berhasil Menghapus Nama Jurusan");
+        Cache::delete("jurusans");
+        return redirect()->back()->with("success","Berhasil Menghapus Nama Jurusan");
     }
 }

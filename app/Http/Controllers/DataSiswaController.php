@@ -19,24 +19,23 @@ class DataSiswaController extends Controller
         $jurusans = Jurusan::get();
 
 
-        $dataSiswas = DataSiswa::query()->with("psb_tahun_ajaran");
         
         $dataSiswas = DataSiswa::with('psb_tahun_ajaran')
-            ->when($request->tahun, function ($query) use ($request) {
+            ->when($request->filled(""), function ($query) use ($request) {
                 // Filter tahun dulu jika ada
                 $query->whereHas('psb_tahun_ajaran', function ($q2) use ($request) {
-                    $q2->where('tahun_ajaran', $request->tahun);
+                    $q2->where('tahun_ajaran', $request->input("tahun"));
                 });
             })
-            ->when($request->filtering,function($query) use($request){
-                $query->where("jurusan","=",$request->filtering);
+            ->when($request->filled("filtering"),function($query) use($request){
+                $query->where("jurusan","=",$request->input("filtering"));
             })
-            ->when($request->search, function ($query) use ($request) {
+            ->when($request->input("search"), function ($query) use ($request) {
                 $query->where(function ($q) use ($request) {
-                    $q->where('nama_calon_siswa', 'like', '%' . $request->search . '%')
-                    ->orWhere('asal_sekolah', 'like', '%' . $request->search . '%')
-                    ->orWhere('nama_ayah', 'like', '%' . $request->search . '%')
-                    ->orWhere('nama_ibu', 'like', '%' . $request->search . '%');
+                    $q->where('nama_calon_siswa', 'like', '%' . $request->input("search") . '%')
+                    ->orWhere('asal_sekolah', 'like', '%' . $request->input("search") . '%')
+                    ->orWhere('nama_ayah', 'like', '%' . $request->input("search") . '%')
+                    ->orWhere('nama_ibu', 'like', '%' . $request->input("search") . '%');
                 });
             })->orderBy($request->input("sort_by","created_date"),$request->input("sort_order","asc"))
             ->paginate(10)->withQueryString();

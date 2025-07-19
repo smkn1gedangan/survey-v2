@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Pekerjaan;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class PekerjaanController extends Controller
@@ -13,7 +15,20 @@ class PekerjaanController extends Controller
      */
     public function index()
     {
-        $pekerjaans = Pekerjaan::latest()->paginate(10);
+        $datas = Cache::remember('pekerjaans', 60 * 60 * 24 * 7, function () {
+            return Pekerjaan::orderBy("nama","asc")->latest()->get(); // seluruh data guru
+        });
+        $perPage = 10;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = collect($datas)->slice(($currentPage - 1) * $perPage, $perPage)->values();
+
+        $pekerjaans = new LengthAwarePaginator(
+            $currentItems,
+            count($datas),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
         return Inertia::render("Pekerjaan/Index",[
             "pekerjaans"=>$pekerjaans
         ]);
@@ -33,18 +48,18 @@ class PekerjaanController extends Controller
     public function store(Request $request)
     {
          $data = $request->validate([
-            "nama"=>"string|required|min:3|max:20|unique:jurusans,nama"
+            "nama"=>"string|required|min:3|max:20|unique:pekerjaans,nama"
         ],[
-            "nama.required"=>"Nama Jurusan Wajib Diisi",
-            "nama.unique"=>"Nama Jurusan Telah Ada , Gunakan Nama Lain",
-            "nama.min"=>"Nama Jurusan Minimal 3 kata",
-            "nama.max"=>"Nama Jurusan Maximal 20 kata",
+            "nama.required"=>"Nama Pekerjaan Wajib Diisi",
+            "nama.unique"=>"Nama Pekerjaan Telah Ada , Gunakan Nama Lain",
+            "nama.min"=>"Nama Pekerjaan Minimal 3 kata",
+            "nama.max"=>"Nama Pekerjaan Maximal 20 kata",
         ]);
 
         Pekerjaan::create([
             "nama"=>$data["nama"]
         ]);
-
+        Cache::delete("pekerjaans");
          return redirect()->back()->with("success","Berhasil Menambah Nama Nama Pekerjaan Baru");
     }
 
@@ -72,9 +87,9 @@ class PekerjaanController extends Controller
          $data = $request->validate([
             "nama"=>"string|required|min:3|max:20"
         ],[
-            "nama.required"=>"Nama Jurusan Wajib Diisi",
-            "nama.min"=>"Nama Jurusan Minimal 3 kata",
-            "nama.max"=>"Nama Jurusan Maximal 20 kata",
+            "nama.required"=>"Nama Pekerjaan Wajib Diisi",
+            "nama.min"=>"Nama Pekerjaan Minimal 3 kata",
+            "nama.max"=>"Nama Pekerjaan Maximal 20 kata",
         ]);
 
 
@@ -82,8 +97,8 @@ class PekerjaanController extends Controller
         $pekerjaanId->nama = $data["nama"];
         $pekerjaanId->save();
         
-        
-        return redirect()->back()->with("success","Berhasil Mengubah Nama Jurusan Baru");
+        Cache::delete("pekerjaans");
+        return redirect()->back()->with("success","Berhasil Mengubah Nama Pekerjaan");
     }
 
     /**
@@ -95,7 +110,7 @@ class PekerjaanController extends Controller
         if($pekerjaanId){
             $pekerjaanId->delete();
         }
-
+        Cache::delete("pekerjaans");
          return redirect()->back()->with("success","Berhasil Menghapus Nama Pekerjaan");
     }
 }
